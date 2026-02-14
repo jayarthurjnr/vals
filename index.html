@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #ff4b8b, #ff7eb3, #ff9ecf);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+}
+
+/* Heartbeat animation */
+.card {
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.15);
+  border-radius: 25px;
+  padding: 50px 40px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  max-width: 400px;
+  animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.03); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+  min-height: 24px;
+}
+
+button {
+  border: none;
+  padding: 14px 30px;
+  font-size: 1rem;
+  border-radius: 50px;
+  margin: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#yes {
+  background: white;
+  color: #ff4b8b;
+  font-weight: 600;
+}
+
+#no {
+  background: rgba(255,255,255,0.3);
+  color: white;
+}
+
+.celebrate {
+  position: absolute;
+  font-size: 24px;
+  animation: explode 3s linear forwards;
+}
+
+@keyframes explode {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-500px) scale(1.8); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Alero 💖</h1>
+  <p id="message">Will you be my Valentine? 🥺✨</p>
+  <button id="yes">Yes</button>
+  <button id="no">No</button>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const message = document.getElementById("message");
+
+let yesScale = 1;
+let noScale = 1;
+
+const teasingTexts = [
+  "Are you sure? 🥺",
+  "Think again 😭",
+  "Be serious now 😏",
+  "You know you want to 💖",
+  "Stop playing 😂"
+];
+
+/* When hovering NO */
+noBtn.addEventListener("mouseenter", () => {
+  // Yes grows bigger
+  yesScale += 0.2;
+  yesBtn.style.transform = `scale(${yesScale})`;
+
+  // No shrinks
+  noScale -= 0.1;
+  if (noScale < 0.5) noScale = 0.5;
+  noBtn.style.transform = `scale(${noScale})`;
+
+  // Change teasing message
+  const randomText = teasingTexts[Math.floor(Math.random() * teasingTexts.length)];
+  message.textContent = randomText;
+});
+
+/* YES click celebration */
+yesBtn.addEventListener("click", () => {
+  document.querySelector(".card").innerHTML = `
+    <h1>She said YES 😍💖</h1>
+    <p>I knew it 😌✨</p>
+  `;
+  launchCelebration();
+});
+
+function launchCelebration() {
+  const emojis = ["💖","💕","💘","💝","🎉","✨","🥰","😍","🔥"];
+  for (let i = 0; i < 100; i++) {
+    const span = document.createElement("span");
+    span.classList.add("celebrate");
+    span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    span.style.left = Math.random() * window.innerWidth + "px";
+    span.style.top = window.innerHeight - 50 + "px";
+    span.style.fontSize = (20 + Math.random() * 40) + "px";
+    span.style.animationDuration = (2 + Math.random() * 2) + "s";
+    document.body.appendChild(span);
+    setTimeout(() => span.remove(), 3000);
+  }
+}
+</script>
+
+</body>
+</html>
